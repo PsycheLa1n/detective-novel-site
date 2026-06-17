@@ -1,0 +1,14 @@
+{
+  "name": "detective-novel-site",
+  "version": "1.0.0",
+  "description": "推理小说检索网站 - 搜索、筛选、排序推理小说",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.0",
+    "express-session": "^1.18.0",
+    "sql.js": "^1.11.0"
+  }
+}

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>推理小说检索网 — 探索推理世界的每一个角落</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="navbar-inner">
+      <a href="/" class="nav-logo">
+        <span class="logo-icon">🔍</span> 推理小说检索网
+      </a>
+      <div class="nav-links">
+        <a href="/">首页</a>
+        <a href="/search.html">小说检索</a>
+        <a href="#message-board">留言板</a>
+      </div>
+      <div class="nav-user" id="user-area">
+        <a href="/login.html" class="btn btn-outline btn-sm">登录</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero / Carousel -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-tagline">
+        <h1>🕵️ 探索推理世界的每一个角落</h1>
+        <p>从本格到社会派，从密室到连环杀人 — 发现你下一本最爱的推理小说</p>
+      </div>
+
+      <div class="carousel-wrapper" id="carousel">
+        <div class="carousel-track" id="carousel-track"></div>
+        <button class="carousel-btn prev" onclick="moveCarousel(-1)">◀</button>
+        <button class="carousel-btn next" onclick="moveCarousel(1)">▶</button>
+      </div>
+      <div class="carousel-indicators" id="carousel-indicators"></div>
+    </div>
+  </section>
+
+  <!-- Featured Authors -->
+  <section class="section" style="padding-top:2rem">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">推荐作家</h2>
+        <a href="/search.html" class="section-more">查看全部 →</a>
+      </div>
+      <div class="author-scroll" id="featured-authors"></div>
+    </div>
+  </section>
+
+  <!-- Recommended Books -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">推荐书籍</h2>
+        <a href="/search.html" class="section-more">查看全部 →</a>
+      </div>
+      <div class="book-grid" id="featured-books"></div>
+    </div>
+  </section>
+
+  <!-- Message Board -->
+  <section class="section" id="message-board">
+    <div class="container">
+      <div class="message-board">
+        <h3>💬 读者留言板 <span style="font-size:0.7rem;color:var(--accent);font-weight:normal">（实时更新）</span></h3>
+        <div id="message-input-container">
+          <div class="message-input-area">
+            <textarea id="message-input" placeholder="写下你对推理小说的想法..." rows="2"></textarea>
+            <button class="btn btn-primary" id="message-send-btn" onclick="sendMessage()">发送</button>
+          </div>
+        </div>
+        <div class="message-list" id="message-list">
+          <div class="empty-state"><div class="empty-icon">💬</div>暂无留言，来写第一条吧！</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>📚 推理小说检索网 © 2026 — 为推理爱好者而生</p>
+  </footer>
+
+  <script src="/js/common.js"></script>
+  <script src="/js/home.js"></script>
+  <script src="/js/messages.js"></script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>书籍详情 — 推理小说检索网</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="navbar-inner">
+      <a href="/" class="nav-logo">
+        <span class="logo-icon">🔍</span> 推理小说检索网
+      </a>
+      <div class="nav-links">
+        <a href="/">首页</a>
+        <a href="/search.html">小说检索</a>
+        <a href="/#message-board">留言板</a>
+      </div>
+      <div class="nav-user" id="user-area">
+        <a href="/login.html" class="btn btn-outline btn-sm">登录</a>
+      </div>
+    </div>
+  </nav>
+
+  <section class="section">
+    <div class="container" id="book-detail-container">
+      <div class="empty-state"><div class="empty-icon">📖</div>加载中...</div>
+    </div>
+  </section>
+
+  <section class="section" id="message-board">
+    <div class="container">
+      <div class="message-board">
+        <h3>💬 读者留言板 <span style="font-size:0.7rem;color:var(--accent);font-weight:normal">（实时更新）</span></h3>
+        <div id="message-input-container">
+          <div class="message-input-area">
+            <textarea id="message-input" placeholder="写下你对推理小说的想法..." rows="2"></textarea>
+            <button class="btn btn-primary" id="message-send-btn" onclick="sendMessage()">发送</button>
+          </div>
+        </div>
+        <div class="message-list" id="message-list">
+          <div class="empty-state"><div class="empty-icon">💬</div>暂无留言，来写第一条吧！</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <p>📚 推理小说检索网 © 2026 — 为推理爱好者而生</p>
+  </footer>
+
+  <script src="/js/common.js"></script>
+  <script src="/js/book.js"></script>
+  <script src="/js/messages.js"></script>
+</body>
+</html>

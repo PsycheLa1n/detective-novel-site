@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>小说检索 — 推理小说检索网</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="navbar-inner">
+      <a href="/" class="nav-logo">
+        <span class="logo-icon">🔍</span> 推理小说检索网
+      </a>
+      <div class="nav-links">
+        <a href="/">首页</a>
+        <a href="/search.html">小说检索</a>
+        <a href="/#message-board">留言板</a>
+      </div>
+      <div class="nav-user" id="user-area">
+        <a href="/login.html" class="btn btn-outline btn-sm">登录</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Search layout -->
+  <section class="section">
+    <div class="container">
+      <div class="search-layout">
+
+        <!-- Filters Sidebar -->
+        <aside class="filters-sidebar" id="filters-sidebar">
+          <h3>🔍 筛选条件</h3>
+
+          <!-- Keyword -->
+          <div class="filter-group">
+            <div class="filter-label">关键词搜索</div>
+            <div class="search-input-wrapper">
+              <span class="search-icon">🔍</span>
+              <input type="text" id="filter-q" placeholder="书名或作者..." oninput="onFilterChange()">
+            </div>
+          </div>
+
+          <!-- Author -->
+          <div class="filter-group">
+            <div class="filter-label">作家</div>
+            <select class="filter-select" id="filter-author" onchange="onFilterChange()">
+              <option value="">全部作家</option>
+            </select>
+          </div>
+
+          <!-- Year Range -->
+          <div class="filter-group">
+            <div class="filter-label">出版年份</div>
+            <div class="year-range">
+              <input type="number" id="filter-year-from" placeholder="起始" min="1880" max="2026" onchange="onFilterChange()">
+              <span>—</span>
+              <input type="number" id="filter-year-to" placeholder="截止" min="1880" max="2026" onchange="onFilterChange()">
+            </div>
+          </div>
+
+          <!-- Tags -->
+          <div class="filter-group">
+            <div class="filter-label">标签</div>
+            <div class="tag-checkboxes" id="tag-checkboxes"></div>
+          </div>
+
+          <button class="btn btn-outline btn-sm btn-reset" onclick="resetFilters()">🔄 重置筛选</button>
+        </aside>
+
+        <!-- Results -->
+        <div class="search-results">
+          <div class="search-toolbar">
+            <div class="search-count" id="search-count">共 <strong>0</strong> 本推理小说</div>
+            <select class="sort-select" id="sort-select" onchange="onFilterChange()">
+              <option value="rating_desc">评分最高</option>
+              <option value="rating_asc">评分最低</option>
+              <option value="title_asc">书名 A → Z</option>
+              <option value="title_desc">书名 Z → A</option>
+              <option value="year_desc">出版年份 新 → 旧</option>
+              <option value="year_asc">出版年份 旧 → 新</option>
+            </select>
+          </div>
+          <div class="book-grid" id="search-results-grid">
+            <div class="empty-state"><div class="empty-icon">🔍</div>加载中...</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Message Board -->
+  <section class="section" id="message-board">
+    <div class="container">
+      <div class="message-board">
+        <h3>💬 读者留言板 <span style="font-size:0.7rem;color:var(--accent);font-weight:normal">（实时更新）</span></h3>
+        <div id="message-input-container">
+          <div class="message-input-area">
+            <textarea id="message-input" placeholder="写下你对推理小说的想法..." rows="2"></textarea>
+            <button class="btn btn-primary" id="message-send-btn" onclick="sendMessage()">发送</button>
+          </div>
+        </div>
+        <div class="message-list" id="message-list">
+          <div class="empty-state"><div class="empty-icon">💬</div>暂无留言，来写第一条吧！</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <p>📚 推理小说检索网 © 2026 — 为推理爱好者而生</p>
+  </footer>
+
+  <script src="/js/common.js"></script>
+  <script src="/js/search.js"></script>
+  <script src="/js/messages.js"></script>
+</body>
+</html>
