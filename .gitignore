@@ -4,3 +4,4 @@ database.sqlite
 Thumbs.db
 ngrok.exe
 *.zip
+config.json

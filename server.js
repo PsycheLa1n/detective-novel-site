@@ -245,6 +245,87 @@ app.get('/api/books/:id', async (req, res) => {
   res.json(book);
 });
 
+// ===== AI CHAT ROUTE =====
+
+// API Key 从 config.json 读取（该文件不上传GitHub，见 config.example.json）
+const config = require('./config.json');
+const DEEPSEEK_API_KEY = config.deepseekApiKey;
+
+app.post('/api/chat', async (req, res) => {
+  const { message } = req.body;
+  if (!message || !message.trim()) {
+    return res.status(400).json({ error: '消息不能为空' });
+  }
+
+  try {
+    const db = await getDb();
+
+    // Build book database context for the AI
+    const booksResult = db.exec(`
+      SELECT b.id, b.title, b.author, b.year, b.rating, b.description,
+             GROUP_CONCAT(t.name, '、') as tag_names
+      FROM books b
+      LEFT JOIN book_tags bt ON b.id = bt.book_id
+      LEFT JOIN tags t ON bt.tag_id = t.id
+      GROUP BY b.id
+      ORDER BY b.rating DESC
+    `);
+
+    const allBooks = booksResult[0].values.map(row => ({
+      id: row[0], title: row[1], author: row[2], year: row[3],
+      rating: row[4], desc: (row[5] || '').substring(0, 80), tags: row[6] || ''
+    }));
+
+    const tagsResult = db.exec("SELECT name FROM tags ORDER BY name");
+    const allTags = tagsResult[0].values.map(row => row[0]);
+
+    // Build system prompt with full book database
+    const bookList = allBooks.map(b =>
+      `《${b.title}》|${b.author}|${b.year}年|评分${b.rating}|标签:${b.tags}|${b.desc}`
+    ).join('\n');
+
+    const systemPrompt = `你是一个推理小说推荐专家。以下是网站数据库中全部的${allBooks.length}本推理小说：
+
+${bookList}
+
+可用的标签: ${allTags.join('、')}
+
+规则：
+1. 根据用户的偏好和问题，从数据库中推荐最匹配的推理小说（至少推荐3本）
+2. 每次推荐必须包含书名、作者、年份、评分、推荐理由（结合简介说明为什么适合用户）
+3. 如果用户问的是推理小说相关知识，可以自由回答
+4. 回答要专业、热情，像一个资深的推理小说爱好者
+5. 控制在300字以内`;
+
+    const deepseekRes = await fetch('https://api.deepseek.com/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${DEEPSEEK_API_KEY}`
+      },
+      body: JSON.stringify({
+        model: 'deepseek-chat',
+        messages: [
+          { role: 'system', content: systemPrompt },
+          { role: 'user', content: message }
+        ],
+        max_tokens: 800,
+        temperature: 0.7
+      })
+    });
+
+    const data = await deepseekRes.json();
+    if (data.choices && data.choices[0]) {
+      res.json({ reply: data.choices[0].message.content });
+    } else {
+      res.status(500).json({ error: 'AI 响应异常，请重试' });
+    }
+  } catch (e) {
+    console.error('Chat error:', e);
+    res.status(500).json({ error: 'AI 服务暂时不可用: ' + e.message });
+  }
+});
+
 // ===== MESSAGES ROUTES =====
 
 // Get messages
